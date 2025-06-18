@@ -1,1 +1,17 @@
-spring.application.name=spring-boot-rest-api
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/person_rest_db?useTimeZone=UTC
+    username: user
+    password: admin123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+    show-sql: true
+    open-in-view: false
+logging:
+  level:
+    #root: WARN
+    br.com.viniciussouza: DEBUG

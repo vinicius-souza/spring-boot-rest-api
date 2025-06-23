@@ -1,4 +1,4 @@
-package br.com.viniciussouza.spring_boot_rest_api.dtos.v1;
+package br.com.viniciussouza.spring_boot_rest_api.dtos;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,9 +1,7 @@
 package br.com.viniciussouza.spring_boot_rest_api.services;
 
-import br.com.viniciussouza.spring_boot_rest_api.dtos.v1.PersonDTO;
-import br.com.viniciussouza.spring_boot_rest_api.dtos.v2.PersonDTOV2;
+import br.com.viniciussouza.spring_boot_rest_api.dtos.PersonDTO;
 import br.com.viniciussouza.spring_boot_rest_api.exception.ResourceNotFoundException;
-import br.com.viniciussouza.spring_boot_rest_api.mapper.custom.PersonMapper;
 import br.com.viniciussouza.spring_boot_rest_api.model.Person;
 import br.com.viniciussouza.spring_boot_rest_api.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,6 @@ public class PersonService {
 
     @Autowired
     PersonRepository repository;
-
-    @Autowired
-    PersonMapper personMapper;
 
 
     public List<PersonDTO> findAll() {
@@ -48,13 +43,6 @@ public class PersonService {
         logger.info("Creating one Person!");
 
         return map(repository.save(map(person, Person.class)), PersonDTO.class);
-    }
-
-    public PersonDTOV2 createV2(PersonDTOV2 person) {
-
-        logger.info("Creating one Person V2!");
-
-        return personMapper.personToPersonDTOV2(repository.save(personMapper.personDTOV2ToPerson(person)));
     }
 
     public PersonDTO update(PersonDTO person) {

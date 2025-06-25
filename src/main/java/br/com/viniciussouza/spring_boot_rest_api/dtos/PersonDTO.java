@@ -1,6 +1,7 @@
 package br.com.viniciussouza.spring_boot_rest_api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Objects;
 
 //@JsonPropertyOrder({"id", "address", "first_name", "last_name",  "gender"})
 // @JsonFilter("PersonFilter") // to filter out fields during serialization
-public class PersonDTO implements Serializable {
+public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

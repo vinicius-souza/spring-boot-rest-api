@@ -2,6 +2,7 @@ package br.com.viniciussouza.spring_boot_rest_api.services;
 
 import br.com.viniciussouza.spring_boot_rest_api.controllers.PersonController;
 import br.com.viniciussouza.spring_boot_rest_api.dtos.PersonDTO;
+import br.com.viniciussouza.spring_boot_rest_api.exception.RequiredObjectIsNullException;
 import br.com.viniciussouza.spring_boot_rest_api.exception.ResourceNotFoundException;
 import br.com.viniciussouza.spring_boot_rest_api.model.Person;
 import br.com.viniciussouza.spring_boot_rest_api.repositories.PersonRepository;
@@ -50,6 +51,10 @@ public class PersonService {
 
     public PersonDTO create(PersonDTO person) {
 
+        if (person == null) {
+            throw new RequiredObjectIsNullException();
+        }
+
         logger.info("Creating one Person!");
 
         var personDTO = map(repository.save(map(person, Person.class)), PersonDTO.class);
@@ -59,6 +64,10 @@ public class PersonService {
     }
 
     public PersonDTO update(PersonDTO person) {
+
+        if (person == null) {
+            throw new RequiredObjectIsNullException();
+        }
 
         logger.info("Updating one Person!");
         Person entity = repository.findById(person.getId())

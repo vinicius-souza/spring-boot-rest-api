@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class ObjectMapper {
 
-    private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+    private static final Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
 
     public static <O, D> D map(final O origin, final Class<D> destinationClass) {

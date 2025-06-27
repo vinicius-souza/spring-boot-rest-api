@@ -1,8 +1,8 @@
 package br.com.viniciussouza.spring_boot_rest_api.controllers;
 
-import br.com.viniciussouza.spring_boot_rest_api.controllers.docs.PersonControllerDocs;
-import br.com.viniciussouza.spring_boot_rest_api.dtos.PersonDTO;
-import br.com.viniciussouza.spring_boot_rest_api.services.PersonService;
+import br.com.viniciussouza.spring_boot_rest_api.controllers.docs.BookControllerDocs;
+import br.com.viniciussouza.spring_boot_rest_api.dtos.BookDTO;
+import br.com.viniciussouza.spring_boot_rest_api.services.BookService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +22,12 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_YAML_VALUE;
 
 @RestController
-@RequestMapping("api/v1/person")
-@Tag(name = "Person", description = "Endpoints for managing person")
-public class PersonController implements PersonControllerDocs {
+@RequestMapping("api/v1/book")
+@Tag(name = "Book", description = "Endpoints for managing books")
+public class BookController implements BookControllerDocs {
 
     @Autowired
-    private PersonService service;
+    private BookService service;
 
 
     @GetMapping(produces = {
@@ -35,7 +35,7 @@ public class PersonController implements PersonControllerDocs {
             APPLICATION_XML_VALUE,
             APPLICATION_YAML_VALUE})
     @Override
-    public List<PersonDTO> findAll() {
+    public List<BookDTO> findAll() {
         return service.findAll();
     }
 
@@ -46,7 +46,7 @@ public class PersonController implements PersonControllerDocs {
                     APPLICATION_YAML_VALUE}
     )
     @Override
-    public PersonDTO findById(@PathVariable("id") Long id) {
+    public BookDTO findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
@@ -61,8 +61,8 @@ public class PersonController implements PersonControllerDocs {
                     APPLICATION_YAML_VALUE}
     )
     @Override
-    public PersonDTO create(@RequestBody PersonDTO person) {
-        return service.create(person);
+    public BookDTO create(@RequestBody BookDTO book) {
+        return service.create(book);
     }
 
     @PutMapping(
@@ -76,8 +76,8 @@ public class PersonController implements PersonControllerDocs {
                     APPLICATION_YAML_VALUE}
     )
     @Override
-    public PersonDTO update(@RequestBody PersonDTO person) {
-        return service.update(person);
+    public BookDTO update(@RequestBody BookDTO book) {
+        return service.update(book);
     }
 
 

@@ -11,8 +11,6 @@ import java.util.Objects;
 // @JsonFilter("PersonFilter") // to filter out fields during serialization
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     private Long id;
 
     //@JsonProperty("first_name")

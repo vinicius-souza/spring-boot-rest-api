@@ -1,4 +1,4 @@
-package br.com.viniciussouza.spring_boot_rest_api.mocks;
+package br.com.viniciussouza.spring_boot_rest_api.unit.mocks;
 
 import br.com.viniciussouza.spring_boot_rest_api.dtos.PersonDTO;
 import br.com.viniciussouza.spring_boot_rest_api.model.Person;
@@ -9,11 +9,11 @@ import java.util.List;
 public class PersonMock {
 
     public Person mockPerson() {
-        return mockEntity(1);
+        return mockEntity(0);
     }
 
     public PersonDTO mockPersonDTO() {
-        return mockDTO(1);
+        return mockDTO(0);
     }
 
     public List<Person> mockPersonList() {

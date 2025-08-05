@@ -1,4 +1,4 @@
-package br.com.viniciussouza.spring_boot_rest_api.mocks;
+package br.com.viniciussouza.spring_boot_rest_api.unit.mocks;
 
 import br.com.viniciussouza.spring_boot_rest_api.dtos.BookDTO;
 import br.com.viniciussouza.spring_boot_rest_api.model.Book;

@@ -1,9 +1,10 @@
-package br.com.viniciussouza.spring_boot_rest_api.services;
+package br.com.viniciussouza.spring_boot_rest_api.unit.services;
 
 import br.com.viniciussouza.spring_boot_rest_api.exception.RequiredObjectIsNullException;
-import br.com.viniciussouza.spring_boot_rest_api.mocks.PersonMock;
-import br.com.viniciussouza.spring_boot_rest_api.model.Person;
-import br.com.viniciussouza.spring_boot_rest_api.repositories.PersonRepository;
+import br.com.viniciussouza.spring_boot_rest_api.model.Book;
+import br.com.viniciussouza.spring_boot_rest_api.repositories.BookRepository;
+import br.com.viniciussouza.spring_boot_rest_api.services.BookService;
+import br.com.viniciussouza.spring_boot_rest_api.unit.mocks.BookMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,28 +32,28 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class PersonServiceTest {
+class BookServiceTest {
 
-    PersonMock input;
+    BookMock input;
 
     @InjectMocks
-    PersonService service;
+    BookService service;
 
     @Mock
-    PersonRepository repository;
+    BookRepository repository;
 
     @BeforeEach
     void setUp() {
-        input = new PersonMock();
+        input = new BookMock();
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void findAll() {
 
-        List<Person> personList = input.mockPersonList();
+        List<Book> bookList = input.mockBookList();
 
-        when(repository.findAll()).thenReturn(personList);
+        when(repository.findAll()).thenReturn(bookList);
 
         var result = service.findAll();
 
@@ -58,157 +61,157 @@ class PersonServiceTest {
         assertEquals(14, result.size());
 
 
-        var personOne = result.get(1);
-        assertNotNull(personOne.getLinks());
+        var bookOne = result.get(1);
+        assertNotNull(bookOne.getLinks());
 
-        assertEquals("First Name 1",personOne.getFirstName());
-        assertEquals("Last Name 1",personOne.getLastName());
-        assertEquals("Address 1",personOne.getAddress());
-        assertEquals("Female",personOne.getGender());
+        assertEquals("Title 1",bookOne.getTitle());
+        assertEquals("Author 1",bookOne.getAuthor());
+        assertEquals(1D,bookOne.getPrice());
+        assertEquals(new GregorianCalendar(2024, Calendar.JULY, 2).getTime(),bookOne.getLaunchDate());
 
-        assertTrue(personOne.getLinks()
+        assertTrue(bookOne.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("self")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("GET"))
         );
 
-        assertTrue(personOne.getLinks()
+        assertTrue(bookOne.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("GET"))
         );
 
-        assertTrue(personOne.getLinks()
+        assertTrue(bookOne.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("create")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("POST"))
         );
 
-        assertTrue(personOne.getLinks()
+        assertTrue(bookOne.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("delete")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("DELETE"))
         );
 
-        assertTrue(personOne.getLinks()
+        assertTrue(bookOne.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("PUT"))
         );
 
 
-        var personFour = result.get(4);
-        assertNotNull(personFour.getLinks());
+        var bookFour = result.get(4);
+        assertNotNull(bookFour.getLinks());
 
-        assertEquals("First Name 4",personFour.getFirstName());
-        assertEquals("Last Name 4",personFour.getLastName());
-        assertEquals("Address 4",personFour.getAddress());
-        assertEquals("Male",personFour.getGender());
+        assertEquals("Title 4",bookFour.getTitle());
+        assertEquals("Author 4",bookFour.getAuthor());
+        assertEquals(4D,bookFour.getPrice());
+        assertEquals(new GregorianCalendar(2024, Calendar.JULY, 2).getTime(),bookFour.getLaunchDate());
 
-        assertTrue(personFour.getLinks()
+        assertTrue(bookFour.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("self")
-                                && link.getHref().endsWith("api/v1/person/4")
+                                && link.getHref().endsWith("api/v1/book/4")
                                 && link.getType().equals("GET"))
         );
 
-        assertTrue(personFour.getLinks()
+        assertTrue(bookFour.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("GET"))
         );
 
-        assertTrue(personFour.getLinks()
+        assertTrue(bookFour.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("create")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("POST"))
         );
 
-        assertTrue(personFour.getLinks()
+        assertTrue(bookFour.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("delete")
-                                && link.getHref().endsWith("api/v1/person/4")
+                                && link.getHref().endsWith("api/v1/book/4")
                                 && link.getType().equals("DELETE"))
         );
 
-        assertTrue(personFour.getLinks()
+        assertTrue(bookFour.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("PUT"))
         );
 
-        var personSeven = result.get(7);
-        assertNotNull(personSeven.getLinks());
+        var bookSeven = result.get(7);
+        assertNotNull(bookSeven.getLinks());
 
-        assertEquals("First Name 7",personSeven.getFirstName());
-        assertEquals("Last Name 7",personSeven.getLastName());
-        assertEquals("Address 7",personSeven.getAddress());
-        assertEquals("Female",personSeven.getGender());
+        assertEquals("Title 7",bookSeven.getTitle());
+        assertEquals("Author 7",bookSeven.getAuthor());
+        assertEquals(7D,bookSeven.getPrice());
+        assertEquals(new GregorianCalendar(2024, Calendar.JULY, 2).getTime(),bookSeven.getLaunchDate());
 
-        assertTrue(personSeven.getLinks()
+        assertTrue(bookSeven.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("self")
-                                && link.getHref().endsWith("api/v1/person/7")
+                                && link.getHref().endsWith("api/v1/book/7")
                                 && link.getType().equals("GET"))
         );
 
-        assertTrue(personSeven.getLinks()
+        assertTrue(bookSeven.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("GET"))
         );
 
-        assertTrue(personSeven.getLinks()
+        assertTrue(bookSeven.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("create")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("POST"))
         );
 
-        assertTrue(personSeven.getLinks()
+        assertTrue(bookSeven.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("delete")
-                                && link.getHref().endsWith("api/v1/person/7")
+                                && link.getHref().endsWith("api/v1/book/7")
                                 && link.getType().equals("DELETE"))
         );
 
-        assertTrue(personSeven.getLinks()
+        assertTrue(bookSeven.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("PUT"))
         );
     }
 
     @Test
     void findById() {
-        Person person = input.mockPerson();
+        Book book = input.mockBook();
 
-        when(repository.findById(1L)).thenReturn(Optional.of(person));
+        when(repository.findById(1L)).thenReturn(Optional.of(book));
 
         var result = service.findById(1L);
 
@@ -216,16 +219,16 @@ class PersonServiceTest {
         assertNotNull(result.getId());
         assertNotNull(result.getLinks());
 
-        assertEquals("First Name 1",result.getFirstName());
-        assertEquals("Last Name 1",result.getLastName());
-        assertEquals("Address 1",result.getAddress());
-        assertEquals("Female",result.getGender());
+        assertEquals("Title 1",result.getTitle());
+        assertEquals("Author 1",result.getAuthor());
+        assertEquals(1D,result.getPrice());
+        assertEquals(new GregorianCalendar(2024, Calendar.JULY, 2).getTime(),result.getLaunchDate());
 
         assertTrue(result.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("self")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("GET"))
         );
 
@@ -233,7 +236,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("GET"))
         );
 
@@ -241,7 +244,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("create")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("POST"))
         );
 
@@ -249,7 +252,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("delete")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("DELETE"))
         );
 
@@ -257,33 +260,33 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("PUT"))
         );
     }
 
     @Test
     void create() {
-        Person person = input.mockPerson();
+        Book book = input.mockBook();
 
-        when(repository.save(person)).thenReturn(person);
+        when(repository.save(book)).thenReturn(book);
 
-        var result = service.create(input.mockPersonDTO());
+        var result = service.create(input.mockBookDTO());
 
         assertNotNull(result);
         assertNotNull(result.getId());
         assertNotNull(result.getLinks());
 
-        assertEquals("First Name 1",result.getFirstName());
-        assertEquals("Last Name 1",result.getLastName());
-        assertEquals("Address 1",result.getAddress());
-        assertEquals("Female",result.getGender());
+        assertEquals("Title 1",result.getTitle());
+        assertEquals("Author 1",result.getAuthor());
+        assertEquals(1D,result.getPrice());
+        assertEquals(new GregorianCalendar(2024, Calendar.JULY, 2).getTime(),result.getLaunchDate());
 
         assertTrue(result.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("self")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("GET"))
         );
 
@@ -291,7 +294,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("GET"))
         );
 
@@ -299,7 +302,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("create")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("POST"))
         );
 
@@ -307,7 +310,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("delete")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("DELETE"))
         );
 
@@ -315,34 +318,34 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("PUT"))
         );
     }
 
     @Test
     void update() {
-        Person person = input.mockPerson();
+        Book book = input.mockBook();
 
-        when(repository.findById(1L)).thenReturn(Optional.of(person));
-        when(repository.save(person)).thenReturn(person);
+        when(repository.findById(1L)).thenReturn(Optional.of(book));
+        when(repository.save(book)).thenReturn(book);
 
-        var result = service.update(input.mockPersonDTO());
+        var result = service.update(input.mockBookDTO());
 
         assertNotNull(result);
         assertNotNull(result.getId());
         assertNotNull(result.getLinks());
 
-        assertEquals("First Name 1",result.getFirstName());
-        assertEquals("Last Name 1",result.getLastName());
-        assertEquals("Address 1",result.getAddress());
-        assertEquals("Female",result.getGender());
+        assertEquals("Title 1",result.getTitle());
+        assertEquals("Author 1",result.getAuthor());
+        assertEquals(1D,result.getPrice());
+        assertEquals(new GregorianCalendar(2024, Calendar.JULY, 2).getTime(),result.getLaunchDate());
 
         assertTrue(result.getLinks()
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("self")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("GET"))
         );
 
@@ -350,7 +353,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("GET"))
         );
 
@@ -358,7 +361,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("create")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("POST"))
         );
 
@@ -366,7 +369,7 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("delete")
-                                && link.getHref().endsWith("api/v1/person/1")
+                                && link.getHref().endsWith("api/v1/book/1")
                                 && link.getType().equals("DELETE"))
         );
 
@@ -374,26 +377,26 @@ class PersonServiceTest {
                 .stream()
                 .anyMatch(link ->
                         link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/v1/person")
+                                && link.getHref().endsWith("api/v1/book")
                                 && link.getType().equals("PUT"))
         );
     }
 
     @Test
     void delete() {
-        Person person = input.mockPerson();
+        Book book = input.mockBook();
 
-        when(repository.findById(1L)).thenReturn(Optional.of(person));
+        when(repository.findById(1L)).thenReturn(Optional.of(book));
 
         service.delete(1L);
 
         verify(repository, times(1)).findById(anyLong());
-        verify(repository, times(1)).delete(any(Person.class));
+        verify(repository, times(1)).delete(any(Book.class));
         verifyNoMoreInteractions(repository);
     }
 
     @Test
-    void createWithNullPerson() {
+    void createWithNullBook() {
         var exception = assertThrows(
                 RequiredObjectIsNullException.class,
                 () -> service.create(null)
@@ -406,7 +409,7 @@ class PersonServiceTest {
     }
 
     @Test
-    void updateWithNullPerson() {
+    void updateWithNullBook() {
         var exception = assertThrows(
                 RequiredObjectIsNullException.class,
                 () -> service.update(null)

@@ -1,7 +1,7 @@
 package br.com.viniciussouza.spring_boot_rest_api.unit.mappers;
 
 import br.com.viniciussouza.spring_boot_rest_api.dtos.PersonDTO;
-import br.com.viniciussouza.spring_boot_rest_api.mocks.PersonMock;
+import br.com.viniciussouza.spring_boot_rest_api.unit.mocks.PersonMock;
 import br.com.viniciussouza.spring_boot_rest_api.model.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

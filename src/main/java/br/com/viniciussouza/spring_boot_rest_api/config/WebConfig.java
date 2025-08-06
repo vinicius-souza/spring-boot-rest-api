@@ -1,7 +1,9 @@
 package br.com.viniciussouza.spring_boot_rest_api.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -10,6 +12,18 @@ import static org.springframework.http.MediaType.APPLICATION_YAML;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("{cors.origin-pattern}")
+    private String corsOriginPattern;
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        var allowedOrigins = corsOriginPattern.split(",");
+        registry.addMapping("/**")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                .allowCredentials(true)
+                .allowedOrigins(allowedOrigins);
+    }
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -34,4 +48,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .mediaType("xml", APPLICATION_XML)
                 .mediaType("yaml", APPLICATION_YAML); // Note: YAML is not a standard media type, but can be used for custom implementations
     }
+
 }
